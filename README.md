@@ -20,7 +20,7 @@ The document makes the following assumptions
 Using a template called `scotty-hello-world`, create a new stack project called `helloscotty`.
 
 ``` bash
- stack new helloscotty scotty-hello-world
+    stack new helloscotty scotty-hello-world
 ```
 
 The template currently uses earlier versions of ghc and scotty libraries. Therefore, make the following
@@ -33,9 +33,9 @@ changes
 
     Test the settings, and make sure the build is sucessful.
 
-    ``` bash
-        stack build
-    ```
+``` bash
+            stack build
+```
 
     3. Simulate a typical web-application folder structure. Since our web application would involve
     some static files, we create a 'static' folder under which we could have js and css files. We will
@@ -43,9 +43,9 @@ changes
 
     4. By now, you should be able to run the application, by refering to the executable create by `stack build` command.  Try running
 
-    ``` bash
-        stack exec helloscotty
-    ```
+``` bash
+            stack exec helloscotty
+```
 
     So far we have used a vanilla stack setup that did not involve any references to docker. But, if we want to deploy the executable on any server, than we need dependencies like `libgmp` available on the server. Especially, if you were to use services like (EBS), where the VM is not self-hosted, that we cannot run our web application without the dependencies. EBS, atleast, currently does not provide a default web application to run Haskell based applications. Currently, only language like Python, Java, Ruby, Go etc are supported.
 
@@ -56,27 +56,27 @@ changes
     1. Stack comes with in-built docker integration. You can refer to the docs at [Stack-Docker Integration](https://docs.haskellstack.org/en/stable/docker_integration/). In short, for the sample application
     we want to build, we will add the following lines to the `stack.yaml` file.
 
-    ``` yaml
+``` yaml
     docker:
       enable: true
       repo: fpco/stack-build
-    ```
+```
 
     This will tell stack, to download an default image of docker that contains all the dependencies that will be needed to compile and later on run our web application.
 
     After add these lines, we can build are application using this container, just by running
 
-    ``` bash
+``` bash
         # pull the docker image that will reflect the image for the chosen lts. In our case that will be 7.14
         stack docker pull
         stack build
-    ```
+```
 
     The compiled code can run using the same docker container with,
 
-    ``` bash
+``` bash
         stack --docker-run-args='--net=bridge --publish=3000:3000' exec helloscotty
-    ```
+```
 
     By running, this command we can make sure that our web application can run successfully within
     the referenced docker container.
