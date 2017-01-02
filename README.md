@@ -89,13 +89,15 @@ we will follow a number of steps (referenced later on, in this document) to auth
 
 We also need to add the executable and the static folder to the image. The basic docker file would look as follows:
 
-# Docker file for helloscotty - hosted at https://github.com/gdevanla/helloscotty
+``` dockerfile
+# Docker file for helloscotty
 FROM fpco/stack-build:lts-7.10
 MAINTAINER your name <your@email.com>
 ADD static static
 ADD bin/helloscotty helloscotty
 EXPOSE 3000
 ENTRYPOINT ./helloscotty
+```
 
 This docker file will be access by the docker hub server to build the image, each time a change is push to this repo. Alternate, settings can be explored
 on Docker Hub. Note, that we have to `ADD` statements in the docker file
