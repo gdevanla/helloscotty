@@ -13,7 +13,7 @@ The document makes the following assumptions
 
 1. Basic knowldge of [Docker](https://docs.docker.com/engine/userguide/)
 2. Familiarity with [EBS](https://aws.amazon.com/elasticbeanstalk/)
-3. Familiarity with [Stack[(https://docs.haskellstack.org/en/stable/README/)
+3. Familiarity with [Stack](https://docs.haskellstack.org/en/stable/README/)
 
 ## Create a Scotty Web Application
 
