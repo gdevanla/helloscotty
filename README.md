@@ -53,28 +53,29 @@ Therefore, we are left with only one option. That is, we need to use a docker-ba
 
 1. Stack comes with in-built docker integration. You can refer to the docs at [Stack-Docker Integration](https://docs.haskellstack.org/en/stable/docker_integration/). In short, for the sample application we want to build, we will add the following lines to the `stack.yaml` file.
 
-``` yaml
-    docker:
-      enable: true
-      repo: fpco/stack-build
-```
+    ``` yaml
+        docker:
+          enable: true
+          repo: fpco/stack-build
+    ```
     This will tell stack, to download an default image of docker that contains all the dependencies that will be needed to compile and later on run our web application.
-
     After add these lines, we can build are application using this container, just by running
 
-``` bash
-    pull the docker image that will reflect the image for the chosen lts. In our case that will be 7.14
-    stack docker pull
-    stack build
-```
+    ``` bash
+        pull the docker image that will reflect the image for the chosen lts. In our case that will be 7.14
+        stack docker pull
+        stack build
+    ```
    The compiled code can run using the same docker container with,
 
-``` bash
-    stack --docker-run-args='--net=bridge --publish=3000:3000' exec helloscotty
-```
+    ``` bash
+        stack --docker-run-args='--net=bridge --publish=3000:3000' exec helloscotty
+    ```
     By running, this command we can make sure that our web application can run successfully within the referenced docker container.
+ 
 
 2. Creating the `Dockerfile`.
+
     We want to be able to access our docker image from an EBS environment. One way to do this is to host the docker image on docker hub. Alternatively, one could host it on any other private repository or on S3 itself. For our usecase, we will host our docker image on Docker Hub. If the docker image is private, then we will follow a number of steps (referenced later on, in this document) to authorize Amazon EBS enviroment to be able to access the image.
 
     Note, we also need to add the executable and the static folder to the image. The basic docker file would look as follows:
@@ -91,9 +92,9 @@ Therefore, we are left with only one option. That is, we need to use a docker-ba
 
     This docker file will be access by the docker hub server to build the image, each time a change is push to this repo.   Alternate, settings can be explored on Docker Hub. Note, that we have to `ADD` statements in the docker file
 
-    1. ADD the static foloder
-    2. ADD the exectuble we build. For convienience, we can have a script that copies the executable to the bin folder ever ytime a new version is built.
-    3. EXPOSE exposes the port the helloscotty application will be listening on. Currently, the code is hard-coded to listen on this port.
+        1. ADD the static foloder
+        2. ADD the exectuble we build. For convienience, we can have a script that copies the executable to the bin folder ever ytime a new version is built.
+        3. EXPOSE exposes the port the helloscotty application will be listening on. Currently, the code is hard-coded to listen on this port.
 
 3. Link the repository to Docker Hub
     Create an account on Docker Hub, choose 'Create Automated Build` and refer to the repository, the web application is available at. DockerHub will
